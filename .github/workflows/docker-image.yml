@@ -33,7 +33,7 @@ jobs:
         NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
         echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-        echo "$New version> $NEW_VERSION!!!!!!!"
+        echo "New version: $NEW_VERSION!!!!!!!"
         
     - name: Build Docker Image
       run: |
