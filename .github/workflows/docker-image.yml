@@ -30,19 +30,21 @@ jobs:
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
         echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-        echo "New version: $NEW_VERSION!!!!!!!"
         
     - name: Build Docker Image
+      env:
+        NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
-        docker build -t alexbkb0108/graphql-actions:2.0.0 .
+        docker build -t alexbkb0108/graphql-actions:$NEW_VERSION .
         docker build -t alexbkb0108/graphql-actions:latest .
 
     - name: Push Docker Image
+      env:
+        NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
-        docker push alexbkb0108/graphql-actions:2.0.0
+        docker push alexbkb0108/graphql-actions:$NEW_VERSION
         docker push alexbkb0108/graphql-actions:latest
         
     # - name: Build the Docker image
